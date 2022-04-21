@@ -1,0 +1,13 @@
+CREATE DATABASE StadiumRES
+
+
+USE StadiumRES
+
+
+CREATE TABLE Stadiums
+(
+	Id INT PRIMARY KEY IDENTITY,
+	Name NVARCHAR(255) NOT NULL,
+	HourPrice DECIMAL(18,2) NOT NULL,
+	Capacity INT 
+)
