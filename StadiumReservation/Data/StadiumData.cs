@@ -44,6 +44,51 @@ namespace StadiumReservation.Data
                 }
             }
             return stadiums;
-        } 
+        }
+
+        public Stadium GetById(int id)
+        {
+            Stadium stadium = null;
+            using (SqlConnection con = new SqlConnection(Sql.ConnectionString))
+            {
+                con.Open();
+                string query = "SELECT * FROM Stadiums WHERE  Id=@id";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        stadium = new Stadium
+                        {
+                            Id = dr.GetInt32(0),
+                            Name = dr.GetString(1),
+                            HourPrice = dr.GetDecimal(2),
+                            Capacity = dr.GetInt32(3)
+                        };
+                    }
+                }
+            }
+            return stadium;
+
+        }
+
+
+        public void DeleteById(int id)
+        {
+            
+            using (SqlConnection con = new SqlConnection(Sql.ConnectionString))
+            {
+                con.Open();
+                string query = "DELETE FROM Stadiums WHERE  Id=@id";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+                
+            }
+        }
     }
 }

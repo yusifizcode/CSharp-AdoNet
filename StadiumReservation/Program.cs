@@ -16,6 +16,8 @@ namespace StadiumReservation
             decimal hourPrice;
             string capacityStr;
             int capacity;
+            string selectedIdStr;
+            int selectedId;
             do
             {
                 Console.WriteLine("1. Stadion elave et\n2. Stadionlari goster\n3. Verilmish id'li stadionu goster\n4. Verilmish id'li stadionu sil\n0. Proqrami bitir");
@@ -55,12 +57,35 @@ namespace StadiumReservation
                         break;
                     case "2":
 
-                        stadiumData.GetAll();
+                        foreach (var item in stadiumData.GetAll())
+                        {
+                            Console.WriteLine($"{item.Id} - {item.Name} - {item.HourPrice} - {item.Capacity}");
+                        };
 
                         break;
                     case "3":
+
+
+                        do
+                        {
+                            Console.WriteLine("Id daxil edin: ");
+                            selectedIdStr = Console.ReadLine();
+                        } while (!int.TryParse(selectedIdStr,out selectedId) && stadiumData.GetAll().Count<selectedId);
+
+                        Console.WriteLine(stadiumData.GetById(selectedId).Name);
+
                         break;
                     case "4":
+
+
+                        do
+                        {
+                            Console.WriteLine("Id daxil edin: ");
+                            selectedIdStr = Console.ReadLine();
+                        } while (!int.TryParse(selectedIdStr, out selectedId) && stadiumData.GetAll().Count < selectedId);
+
+                        stadiumData.DeleteById(selectedId);
+
                         break;
                     case "0":
                         break;
